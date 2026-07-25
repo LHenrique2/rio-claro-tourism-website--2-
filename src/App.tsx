@@ -30,6 +30,8 @@ import {
   Store
 } from "lucide-react";
 
+const baseUrl = import.meta.env.BASE_URL;
+
 function Stars({ rating }: { rating: number }) {
   return (
     <span className="text-amber-400" aria-label={`${rating} de 5 estrelas`}>
@@ -53,7 +55,7 @@ function Nav({ favoritesCount, onOpenFavorites, onOpenItinerary, itineraryCount,
     <header className="fixed top-0 z-40 w-full border-b border-white/10 bg-emerald-950/80 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
         <a href="#top" className="flex items-center gap-2 font-bold text-white transition hover:opacity-90">
-          <img src="/images/logo-pmrcrj.png" alt="Logo Rio Claro RJ" className="h-8 w-auto object-contain" />
+          <img src={`${baseUrl}images/logo-pmrcrj.png`} alt="Logo Rio Claro RJ" className="h-8 w-auto object-contain" />
           <span className="leading-tight">
             Rio Claro <span className="text-emerald-300">RJ</span>
           </span>
@@ -124,7 +126,7 @@ function Hero() {
     <section id="top" className="relative flex h-screen min-h-[600px] items-center justify-center text-center">
       <div
         className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: "url('/images/hero.jpg')" }}
+        style={{ backgroundImage: `url('${baseUrl}images/hero.jpg')` }}
       />
       <div className="absolute inset-0 bg-gradient-to-b from-emerald-950/60 via-emerald-950/40 to-emerald-950/90" />
       <div className="relative z-10 mx-auto max-w-3xl px-5">
@@ -200,7 +202,7 @@ function About() {
         </div>
         <div className="relative">
           <img
-            src="/images/trilha.jpg"
+            src={`${baseUrl}images/trilha.jpg`}
             alt="Serra do Mar em Rio Claro"
             className="h-[420px] w-full rounded-3xl object-cover shadow-xl"
           />
@@ -236,11 +238,11 @@ function SpotCard({ spot, onOpen, isFavorite, onToggleFavorite, isInItinerary, o
       <div>
         <div className="relative h-56 overflow-hidden bg-stone-100">
           <img
-            src={spot.image || "/images/hero.jpg"}
+            src={spot.image || `${baseUrl}images/hero.jpg`}
             alt={spot.name}
             className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
             onError={(e) => {
-              (e.target as HTMLImageElement).src = "/images/hero.jpg";
+              (e.target as HTMLImageElement).src = `${baseUrl}images/hero.jpg`;
             }}
           />
 
@@ -352,11 +354,11 @@ function SpotModal({
       >
         <div className="relative h-64 sm:h-80 bg-stone-200">
           <img
-            src={spot.image || "/images/hero.jpg"}
+            src={spot.image || `${baseUrl}images/hero.jpg`}
             alt={spot.name}
             className="h-full w-full object-cover"
             onError={(e) => {
-              (e.target as HTMLImageElement).src = "/images/hero.jpg";
+              (e.target as HTMLImageElement).src = `${baseUrl}images/hero.jpg`;
             }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-transparent" />
