@@ -771,11 +771,11 @@ function QuizSection({ spotsList, onRecommendSpot }: { spotsList: Spot[]; onReco
 
             <div className="mt-6 overflow-hidden rounded-2xl border border-white/10 shadow-lg relative max-w-md mx-auto group">
               <img
-                src={recommendedSpot.image || "/images/hero.jpg"}
+                src={recommendedSpot.image || `${baseUrl}images/hero.jpg`}
                 alt={recommendedSpot.name}
                 className="h-48 w-full object-cover group-hover:scale-105 transition duration-500"
                 onError={(e) => {
-                  (e.target as HTMLImageElement).src = "/images/hero.jpg";
+                  (e.target as HTMLImageElement).src = `${baseUrl}images/hero.jpg`;
                 }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-emerald-950 to-transparent flex items-end p-4">
@@ -838,7 +838,7 @@ function SpotFormModal({ spot, onClose, onSave }: SpotFormModalProps) {
       district: district.trim(),
       short: short.trim(),
       description: description.trim() || short.trim(),
-      image: image.trim() || "/images/hero.jpg",
+      image: image.trim() || `${baseUrl}images/hero.jpg`,
       highlights: highlightsArray,
       mapQuery: mapQuery.trim() || name.trim(),
       coords: coords.trim() || `${district.trim()} — Rio Claro/RJ`,
@@ -1107,11 +1107,11 @@ function AdminPanel({ spotsList, onClose, onLogout, onAdd, onEdit, onDelete }: A
                 <tr key={spot.id} className="hover:bg-stone-50/50 transition">
                   <td className="px-6 py-3 shrink-0">
                     <img
-                      src={spot.image || "/images/hero.jpg"}
+                      src={spot.image || `${baseUrl}images/hero.jpg`}
                       alt={spot.name}
                       className="h-10 w-16 object-cover rounded bg-stone-100 border border-stone-100"
                       onError={(e) => {
-                        (e.target as HTMLImageElement).src = "/images/hero.jpg";
+                        (e.target as HTMLImageElement).src = `${baseUrl}images/hero.jpg`;
                       }}
                     />
                   </td>
@@ -1887,11 +1887,11 @@ export default function App() {
                     return (
                       <div key={spot.id} className="flex gap-3 p-2.5 rounded-xl border border-stone-100 hover:bg-stone-50 transition cursor-pointer" onClick={() => { setActiveId(spot.id); setShowFavoritesPanel(false); }}>
                         <img
-                          src={spot.image || "/images/hero.jpg"}
+                          src={spot.image || `${baseUrl}images/hero.jpg`}
                           alt={spot.name}
                           className="h-16 w-16 rounded-lg object-cover shrink-0 bg-stone-100"
                           onError={(e) => {
-                            (e.target as HTMLImageElement).src = "/images/hero.jpg";
+                            (e.target as HTMLImageElement).src = `${baseUrl}images/hero.jpg`;
                           }}
                         />
                         <div className="min-w-0">
@@ -1957,11 +1957,11 @@ export default function App() {
                           {idx + 1}
                         </div>
                         <img
-                          src={spot.image || "/images/hero.jpg"}
+                          src={spot.image || `${baseUrl}images/hero.jpg`}
                           alt={spot.name}
                           className="h-16 w-16 rounded-lg object-cover shrink-0 bg-stone-100"
                           onError={(e) => {
-                            (e.target as HTMLImageElement).src = "/images/hero.jpg";
+                            (e.target as HTMLImageElement).src = `${baseUrl}images/hero.jpg`;
                           }}
                         />
                         <div className="min-w-0">

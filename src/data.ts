@@ -29,7 +29,7 @@ export const spots: Spot[] = [
       "Quedas d'água deslumbrantes como a das Três Quedas e Sebastião Marinho, cercadas por Mata Atlântica preservada.",
     description:
       "O distrito de Lídice abriga algumas das cachoeiras mais exuberantes de Rio Claro, incluindo a famosa Cachoeira das Três Quedas, a Cachoeira das Borboletas e a Cachoeira Sebastião Marinho. Com poços profundos ideais para nado, escorregadores naturais de pedra e águas extremamente límpidas que descem da Serra do Mar, é o destino perfeito para ecoturistas e aventureiros.",
-    image: "/images/cachoeiras_lidice.png",
+    image: `${baseUrl}images/cachoeiras_lidice.png`,
     highlights: ["Cachoeira das Três Quedas", "Escorrega natural", "Poço para nado"],
     mapQuery: "Cachoeira das Três Quedas, Lídice, Rio Claro, RJ, Brasil",
     coords: "Distrito de Lídice — Rio Claro/RJ",
@@ -57,7 +57,7 @@ export const spots: Spot[] = [
       "Charmoso distrito de origem tcheca, com clima de montanha, hortênsias e gastronomia acolhedora.",
     description:
       "Lídice é um dos distritos mais charmosos de Rio Claro, batizado em homenagem à vila tcheca de Lidice. Com clima ameno de montanha, ruas floridas de hortênsias, pousadas aconchegantes e uma gastronomia que mistura tradições europeias e mineiras, é um refúgio perfeito para descanso e turismo rural.",
-    image: "/images/lidice.jpg",
+    image: `${baseUrl}images/lidice.jpg`,
     highlights: ["Clima de montanha", "Gastronomia rural", "Pousadas charmosas"],
     mapQuery: "Lídice, Rio Claro, RJ, Brasil",
     coords: "Distrito de Lídice — Rio Claro/RJ",
@@ -85,7 +85,7 @@ export const spots: Spot[] = [
       "Sítio histórico da cidade que foi demolida e inundada — um museu a céu aberto.",
     description:
       "O Parque Arqueológico e Ambiental de São João Marcos preserva as ruínas da antiga cidade que foi demolida na década de 1940 para a construção de uma represa. Hoje é um emocionante museu a céu aberto, onde é possível caminhar entre os vestígios da igreja matriz, sobrados e ruas, conhecendo a história e a memória da região.",
-    image: "/images/saojoaomarcos.jpg",
+    image: `${baseUrl}images/saojoaomarcos.jpg`,
     highlights: ["Visita guiada", "História viva", "Centro de visitantes"],
     mapQuery: "Parque Arqueológico São João Marcos, Rio Claro, RJ",
     coords: "Antiga São João Marcos — Rio Claro/RJ",
@@ -113,7 +113,7 @@ export const spots: Spot[] = [
       "Espelho d'água cercado de montanhas, ótimo para pesca esportiva, passeios de barco e contemplação.",
     description:
       "A imensa Represa de Ribeirão das Lajes oferece paisagens deslumbrantes, com suas águas calmas refletindo as montanhas verdes ao redor. É um local procurado para pesca esportiva, passeios de barco, esportes náuticos e momentos de paz à beira d'água, com diversos recantos e pousadas no entorno.",
-    image: "/images/represa.jpg",
+    image: `${baseUrl}images/represa.jpg`,
     highlights: ["Passeio de barco", "Pesca esportiva", "Pôr do sol incrível"],
     mapQuery: "Represa de Ribeirão das Lajes, Rio Claro, RJ",
     coords: "Ribeirão das Lajes — Rio Claro/RJ",
@@ -141,7 +141,7 @@ export const spots: Spot[] = [
       "Trilhas e mirantes na Serra do Mar com vistas panorâmicas dos vales e da Mata Atlântica.",
     description:
       "Para os amantes de aventura, as trilhas da Serra do Mar em Rio Claro revelam mirantes com vistas panorâmicas de tirar o fôlego. Entre matas preservadas, riachos e formações rochosas, os percursos levam a picos onde se descortinam vales verdejantes e mares de nuvens, ideais para o ecoturismo e a fotografia.",
-    image: "/images/trilha.jpg",
+    image: `${baseUrl}images/trilha.jpg`,
     highlights: ["Mirantes panorâmicos", "Observação de aves", "Aventura na natureza"],
     mapQuery: "Serra do Mar, Rio Claro, RJ, Brasil",
     coords: "Serra do Mar — Rio Claro/RJ",
@@ -169,7 +169,7 @@ export const spots: Spot[] = [
       "Distrito tranquilo com fazendas, cafés coloniais e o autêntico estilo de vida do interior fluminense.",
     description:
       "Getulândia é o coração do turismo rural de Rio Claro. Por entre estradas de terra e paisagens bucólicas, o visitante encontra fazendas históricas, produção artesanal, cafés coloniais fartos e a hospitalidade genuína do interior fluminense. Um convite a desacelerar e viver o ritmo do campo.",
-    image: "/images/getulandia.jpg",
+    image: `${baseUrl}images/getulandia.jpg`,
     highlights: ["Café colonial", "Fazendas históricas", "Vida no campo"],
     mapQuery: "Getulândia, Rio Claro, RJ, Brasil",
     coords: "Distrito de Getulândia — Rio Claro/RJ",
@@ -197,7 +197,7 @@ export const spots: Spot[] = [
       "Charmoso e histórico distrito, conhecido pelo seu clima bucólico, arquitetura colonial e a tradicional Festa da União.",
     description:
       "Passa Três é um distrito acolhedor de Rio Claro, com ruas tranquilas, praças arborizadas e construções históricas remanescentes da época áurea do café. O local atrai visitantes pelo seu clima pacato de interior, sua rica gastronomia típica que valoriza os produtores locais e eventos comunitários tradicionais, como a famosa Festa da União.",
-    image: "/images/passatres.jpg",
+    image: `${baseUrl}images/passatres.jpg`,
     highlights: ["Arquitetura Colonial", "Clima Bucólico", "Festa da União"],
     mapQuery: "Passa Três, Rio Claro, RJ, Brasil",
     coords: "Distrito de Passa Três — Rio Claro/RJ",
@@ -225,7 +225,7 @@ export const spots: Spot[] = [
       "Antiga sede do 'Rei do Café' com casarão imperial e capela histórica de 1887.",
     description:
       "A Fazenda São Joaquim da Grama foi uma das propriedades mais importantes do comendador Joaquim José de Souza Breves, o lendário 'Rei do Café' no século XIX. O imponente casarão colonial e a histórica Capela de São Joaquim, erguida em 1887 e tombada pelo Inepac, são marcos de valor inestimável da memória imperial e cafeeira do Sul Fluminense.",
-    image: "/images/saojoaquim.png",
+    image: `${baseUrl}images/saojoaquim.png`,
     highlights: ["Capela de 1887", "História Imperial", "Barões do Café"],
     mapQuery: "Fazenda São Joaquim da Grama, Rio Claro, RJ, Brasil",
     coords: "Passa Três — Rio Claro/RJ",
@@ -253,7 +253,7 @@ export const spots: Spot[] = [
       "Rotas desafiadoras e trilhas em meio à Serra do Mar para entusiastas de motos e esportes de aventura.",
     description:
       "Rio Claro é um destino muito procurado por praticantes de motocross, trilhas de moto e jipes. Aproveitando o relevo montanhoso da Serra do Mar e estradas de terra cercadas por densa vegetação, o município oferece percursos cheios de adrenalina, lama, subidas íngremes e visuais deslumbrantes.",
-    image: "/images/motocross.png",
+    image: `${baseUrl}images/motocross.png`,
     highlights: ["Trilhas técnicas", "Esportes Radicais", "Off-Road na Serra"],
     mapQuery: "Serra do Mar, Rio Claro, RJ, Brasil",
     coords: "Serra do Mar — Rio Claro/RJ",
