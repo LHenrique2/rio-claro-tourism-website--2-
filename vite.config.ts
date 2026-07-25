@@ -11,7 +11,7 @@ const isGithubPages = process.env.GITHUB_ACTIONS === "true";
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: isGithubPages ? `/${repoName}/` : "/",
+  base: isGithubPages ? `/${repoName}/` : "./",
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
