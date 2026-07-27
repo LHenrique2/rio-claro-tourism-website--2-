@@ -16,6 +16,7 @@ import {
   MessageSquare,
   Award,
   ChevronDown,
+  ChevronUp,
   Lock,
   Plus,
   Edit2,
@@ -27,10 +28,15 @@ import {
   Bus,
   CalendarDays,
   Newspaper,
-  Store
+  Store,
+  Volume2,
+  VolumeX,
+  Play,
+  Pause,
+  Music,
+  ChevronLeft,
+  Image
 } from "lucide-react";
-
-const baseUrl = import.meta.env.BASE_URL;
 
 function Stars({ rating }: { rating: number }) {
   return (
@@ -55,7 +61,7 @@ function Nav({ favoritesCount, onOpenFavorites, onOpenItinerary, itineraryCount,
     <header className="fixed top-0 z-40 w-full border-b border-white/10 bg-emerald-950/80 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
         <a href="#top" className="flex items-center gap-2 font-bold text-white transition hover:opacity-90">
-          <img src={`${baseUrl}images/logo-pmrcrj.png`} alt="Logo Rio Claro RJ" className="h-8 w-auto object-contain" />
+          <img src="/images/logo-pmrcrj.png" alt="Logo Rio Claro RJ" className="h-8 w-auto object-contain" />
           <span className="leading-tight">
             Rio Claro <span className="text-emerald-300">RJ</span>
           </span>
@@ -66,6 +72,7 @@ function Nav({ favoritesCount, onOpenFavorites, onOpenItinerary, itineraryCount,
           <a href="#quiz" className="transition hover:text-white flex items-center gap-1"><Sparkles className="h-4 w-4 text-emerald-300 animate-pulse" /> Quiz</a>
           <a href="#pontos" className="transition hover:text-white">Pontos Turísticos</a>
           <a href="#comercio" className="transition hover:text-white flex items-center gap-1"><ShoppingBag className="h-4 w-4 text-amber-300" /> Comércio</a>
+          <a href="#videos" className="transition hover:text-white">Vídeos</a>
           <a href="#roteiro-sec" className="transition hover:text-white">Meu Roteiro</a>
           <a href="#mapa" className="transition hover:text-white">Mapa</a>
         </nav>
@@ -126,7 +133,7 @@ function Hero() {
     <section id="top" className="relative flex h-screen min-h-[600px] items-center justify-center text-center">
       <div
         className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: `url('${baseUrl}images/hero.jpg')` }}
+        style={{ backgroundImage: "url('/images/hero.jpg')" }}
       />
       <div className="absolute inset-0 bg-gradient-to-b from-emerald-950/60 via-emerald-950/40 to-emerald-950/90" />
       <div className="relative z-10 mx-auto max-w-3xl px-5">
@@ -202,7 +209,7 @@ function About() {
         </div>
         <div className="relative">
           <img
-            src={`${baseUrl}images/trilha.jpg`}
+            src="/images/trilha.jpg"
             alt="Serra do Mar em Rio Claro"
             className="h-[420px] w-full rounded-3xl object-cover shadow-xl"
           />
@@ -238,11 +245,11 @@ function SpotCard({ spot, onOpen, isFavorite, onToggleFavorite, isInItinerary, o
       <div>
         <div className="relative h-56 overflow-hidden bg-stone-100">
           <img
-            src={spot.image || `${baseUrl}images/hero.jpg`}
+            src={spot.image || "/images/hero.jpg"}
             alt={spot.name}
             className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
             onError={(e) => {
-              (e.target as HTMLImageElement).src = `${baseUrl}images/hero.jpg`;
+              (e.target as HTMLImageElement).src = "/images/hero.jpg";
             }}
           />
 
@@ -354,11 +361,11 @@ function SpotModal({
       >
         <div className="relative h-64 sm:h-80 bg-stone-200">
           <img
-            src={spot.image || `${baseUrl}images/hero.jpg`}
+            src={spot.image || "/images/hero.jpg"}
             alt={spot.name}
             className="h-full w-full object-cover"
             onError={(e) => {
-              (e.target as HTMLImageElement).src = `${baseUrl}images/hero.jpg`;
+              (e.target as HTMLImageElement).src = "/images/hero.jpg";
             }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-transparent" />
@@ -771,11 +778,11 @@ function QuizSection({ spotsList, onRecommendSpot }: { spotsList: Spot[]; onReco
 
             <div className="mt-6 overflow-hidden rounded-2xl border border-white/10 shadow-lg relative max-w-md mx-auto group">
               <img
-                src={recommendedSpot.image || `${baseUrl}images/hero.jpg`}
+                src={recommendedSpot.image || "/images/hero.jpg"}
                 alt={recommendedSpot.name}
                 className="h-48 w-full object-cover group-hover:scale-105 transition duration-500"
                 onError={(e) => {
-                  (e.target as HTMLImageElement).src = `${baseUrl}images/hero.jpg`;
+                  (e.target as HTMLImageElement).src = "/images/hero.jpg";
                 }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-emerald-950 to-transparent flex items-end p-4">
@@ -838,7 +845,7 @@ function SpotFormModal({ spot, onClose, onSave }: SpotFormModalProps) {
       district: district.trim(),
       short: short.trim(),
       description: description.trim() || short.trim(),
-      image: image.trim() || `${baseUrl}images/hero.jpg`,
+      image: image.trim() || "/images/hero.jpg",
       highlights: highlightsArray,
       mapQuery: mapQuery.trim() || name.trim(),
       coords: coords.trim() || `${district.trim()} — Rio Claro/RJ`,
@@ -1047,14 +1054,56 @@ function LoginModal({ onClose, onLogin }: { onClose: () => void; onLogin: () => 
 // PAINEL ADMINISTRATIVO PRINCIPAL
 interface AdminPanelProps {
   spotsList: Spot[];
+  slidesList: SlideItem[];
   onClose: () => void;
   onLogout: () => void;
   onAdd: () => void;
   onEdit: (spot: Spot) => void;
   onDelete: (id: string) => void;
+  onAddSlide: (slide: SlideItem) => void;
+  onDeleteSlide: (id: string) => void;
 }
 
-function AdminPanel({ spotsList, onClose, onLogout, onAdd, onEdit, onDelete }: AdminPanelProps) {
+function AdminPanel({
+  spotsList,
+  slidesList,
+  onClose,
+  onLogout,
+  onAdd,
+  onEdit,
+  onDelete,
+  onAddSlide,
+  onDeleteSlide,
+}: AdminPanelProps) {
+  const [activeTab, setActiveTab] = useState<"spots" | "slides">("spots");
+  const [showAddSlideForm, setShowAddSlideForm] = useState(false);
+  const [slideUrl, setSlideUrl] = useState("");
+  const [slideTitle, setSlideTitle] = useState("");
+  const [slideCategory, setSlideCategory] = useState("");
+  const [slideCoords, setSlideCoords] = useState("");
+  const [slideShort, setSlideShort] = useState("");
+
+  const handleAddSlideSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!slideUrl.trim() || !slideTitle.trim()) return;
+
+    onAddSlide({
+      id: `slide-${Date.now()}`,
+      image: slideUrl.trim(),
+      title: slideTitle.trim(),
+      category: slideCategory.trim() || "Destaque",
+      coords: slideCoords.trim() || "Rio Claro/RJ",
+      short: slideShort.trim() || "",
+    });
+
+    setSlideUrl("");
+    setSlideTitle("");
+    setSlideCategory("");
+    setSlideCoords("");
+    setSlideShort("");
+    setShowAddSlideForm(false);
+  };
+
   return (
     <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex justify-center items-center p-4">
       <div className="w-full max-w-4xl bg-white h-[85vh] rounded-3xl shadow-2xl flex flex-col p-6 overflow-hidden">
@@ -1065,16 +1114,25 @@ function AdminPanel({ spotsList, onClose, onLogout, onAdd, onEdit, onDelete }: A
             <h3 className="font-bold text-stone-900 text-lg flex items-center gap-2">
               <Settings className="h-5 w-5 text-amber-500" /> Painel de Administração
             </h3>
-            <p className="text-xs text-stone-400">Gerencie todos os destinos cadastrados no catálogo.</p>
+            <p className="text-xs text-stone-400">Gerencie todos os destinos cadastrados e imagens do slideshow.</p>
           </div>
 
           <div className="flex items-center gap-2">
-            <button
-              onClick={onAdd}
-              className="flex items-center gap-1 bg-emerald-600 text-white rounded-lg px-3.5 py-2 text-xs font-bold hover:bg-emerald-700 transition"
-            >
-              <Plus className="h-4 w-4" /> Novo Destino
-            </button>
+            {activeTab === "spots" ? (
+              <button
+                onClick={onAdd}
+                className="flex items-center gap-1 bg-emerald-600 text-white rounded-lg px-3.5 py-2 text-xs font-bold hover:bg-emerald-700 transition"
+              >
+                <Plus className="h-4 w-4" /> Novo Destino
+              </button>
+            ) : (
+              <button
+                onClick={() => setShowAddSlideForm(true)}
+                className="flex items-center gap-1 bg-emerald-600 text-white rounded-lg px-3.5 py-2 text-xs font-bold hover:bg-emerald-700 transition"
+              >
+                <Plus className="h-4 w-4" /> Nova Foto de Slide
+              </button>
+            )}
             <button
               onClick={onLogout}
               className="flex items-center gap-1 border border-stone-200 text-stone-600 rounded-lg px-3 py-2 text-xs font-bold hover:bg-stone-50 transition"
@@ -1090,61 +1148,215 @@ function AdminPanel({ spotsList, onClose, onLogout, onAdd, onEdit, onDelete }: A
           </div>
         </div>
 
-        {/* Tabela de Destinos */}
-        <div className="flex-1 overflow-y-auto rounded-xl border border-stone-100">
-          <table className="w-full border-collapse text-left text-sm text-stone-600">
-            <thead className="bg-stone-50 text-xs font-bold uppercase tracking-wider text-stone-500 border-b border-stone-100">
-              <tr>
-                <th className="px-6 py-3">Miniatura</th>
-                <th className="px-6 py-3">Nome</th>
-                <th className="px-6 py-3">Categoria</th>
-                <th className="px-6 py-3">Distrito</th>
-                <th className="px-6 py-3 text-right">Ações</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-stone-100">
-              {spotsList.map((spot) => (
-                <tr key={spot.id} className="hover:bg-stone-50/50 transition">
-                  <td className="px-6 py-3 shrink-0">
-                    <img
-                      src={spot.image || `${baseUrl}images/hero.jpg`}
-                      alt={spot.name}
-                      className="h-10 w-16 object-cover rounded bg-stone-100 border border-stone-100"
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).src = `${baseUrl}images/hero.jpg`;
-                      }}
-                    />
-                  </td>
-                  <td className="px-6 py-3 font-bold text-stone-850 truncate max-w-[180px]">
-                    {spot.name}
-                  </td>
-                  <td className="px-6 py-3">
-                    <span className="rounded bg-emerald-50 px-2 py-0.5 text-xs font-semibold text-emerald-800">
-                      {spot.category}
-                    </span>
-                  </td>
-                  <td className="px-6 py-3 text-stone-500">{spot.district}</td>
-                  <td className="px-6 py-3 text-right space-x-1 whitespace-nowrap">
-                    <button
-                      onClick={() => onEdit(spot)}
-                      className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-stone-200 text-stone-500 hover:text-emerald-600 hover:border-emerald-200 transition"
-                      title="Editar"
-                    >
-                      <Edit2 className="h-3.5 w-3.5" />
-                    </button>
-                    <button
-                      onClick={() => onDelete(spot.id)}
-                      className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-stone-200 text-stone-500 hover:text-red-600 hover:border-red-200 transition"
-                      title="Excluir"
-                    >
-                      <Trash2 className="h-3.5 w-3.5" />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        {/* Tabs */}
+        <div className="flex border-b border-stone-100 mb-4 text-sm font-semibold">
+          <button
+            onClick={() => setActiveTab("spots")}
+            className={`px-4 py-2 border-b-2 transition ${activeTab === "spots" ? "border-emerald-600 text-emerald-700 font-bold" : "border-transparent text-stone-500 hover:text-stone-700"}`}
+          >
+            📍 Pontos Turísticos ({spotsList.length})
+          </button>
+          <button
+            onClick={() => setActiveTab("slides")}
+            className={`px-4 py-2 border-b-2 transition ${activeTab === "slides" ? "border-emerald-600 text-emerald-700 font-bold" : "border-transparent text-stone-500 hover:text-stone-700"}`}
+          >
+            🖼️ Imagens do Slideshow ({slidesList.length})
+          </button>
         </div>
+
+        {activeTab === "spots" ? (
+          /* Tabela de Destinos */
+          <div className="flex-1 overflow-y-auto rounded-xl border border-stone-100">
+            <table className="w-full border-collapse text-left text-sm text-stone-600">
+              <thead className="bg-stone-50 text-xs font-bold uppercase tracking-wider text-stone-500 border-b border-stone-100">
+                <tr>
+                  <th className="px-6 py-3">Miniatura</th>
+                  <th className="px-6 py-3">Nome</th>
+                  <th className="px-6 py-3">Categoria</th>
+                  <th className="px-6 py-3">Distrito</th>
+                  <th className="px-6 py-3 text-right">Ações</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-stone-100">
+                {spotsList.map((spot) => (
+                  <tr key={spot.id} className="hover:bg-stone-50/50 transition">
+                    <td className="px-6 py-3 shrink-0">
+                      <img
+                        src={spot.image || "/images/hero.jpg"}
+                        alt={spot.name}
+                        className="h-10 w-16 object-cover rounded bg-stone-100 border border-stone-100"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src = "/images/hero.jpg";
+                        }}
+                      />
+                    </td>
+                    <td className="px-6 py-3 font-bold text-stone-850 truncate max-w-[180px]">
+                      {spot.name}
+                    </td>
+                    <td className="px-6 py-3">
+                      <span className="rounded bg-emerald-50 px-2 py-0.5 text-xs font-semibold text-emerald-800">
+                        {spot.category}
+                      </span>
+                    </td>
+                    <td className="px-6 py-3 text-stone-500">{spot.district}</td>
+                    <td className="px-6 py-3 text-right space-x-1 whitespace-nowrap">
+                      <button
+                        onClick={() => onEdit(spot)}
+                        className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-stone-200 text-stone-500 hover:text-emerald-600 hover:border-emerald-200 transition"
+                        title="Editar"
+                      >
+                        <Edit2 className="h-3.5 w-3.5" />
+                      </button>
+                      <button
+                        onClick={() => onDelete(spot.id)}
+                        className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-stone-200 text-stone-500 hover:text-red-600 hover:border-red-200 transition"
+                        title="Excluir"
+                      >
+                        <Trash2 className="h-3.5 w-3.5" />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          /* Tabela de Slideshow */
+          <div className="flex-1 overflow-y-auto rounded-xl border border-stone-100">
+            <table className="w-full border-collapse text-left text-sm text-stone-600">
+              <thead className="bg-stone-50 text-xs font-bold uppercase tracking-wider text-stone-500 border-b border-stone-100">
+                <tr>
+                  <th className="px-6 py-3">Miniatura</th>
+                  <th className="px-6 py-3">Título</th>
+                  <th className="px-6 py-3">Categoria</th>
+                  <th className="px-6 py-3">Localização</th>
+                  <th className="px-6 py-3 text-right">Ações</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-stone-100">
+                {slidesList.map((slide) => (
+                  <tr key={slide.id} className="hover:bg-stone-50/50 transition">
+                    <td className="px-6 py-3 shrink-0">
+                      <img
+                        src={slide.image || "/images/hero.jpg"}
+                        alt={slide.title}
+                        className="h-10 w-16 object-cover rounded bg-stone-100 border border-stone-100"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src = "/images/hero.jpg";
+                        }}
+                      />
+                    </td>
+                    <td className="px-6 py-3 font-bold text-stone-850 truncate max-w-[180px]">
+                      {slide.title}
+                    </td>
+                    <td className="px-6 py-3">
+                      <span className="rounded bg-emerald-50 px-2 py-0.5 text-xs font-semibold text-emerald-800">
+                        {slide.category}
+                      </span>
+                    </td>
+                    <td className="px-6 py-3 text-stone-500">{slide.coords}</td>
+                    <td className="px-6 py-3 text-right whitespace-nowrap">
+                      <button
+                        onClick={() => onDeleteSlide(slide.id)}
+                        className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-stone-200 text-stone-500 hover:text-red-600 hover:border-red-200 transition"
+                        title="Excluir"
+                      >
+                        <Trash2 className="h-3.5 w-3.5" />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+
+        {/* Modal de adicionar foto de slide */}
+        {showAddSlideForm && (
+          <div className="fixed inset-0 z-60 bg-black/65 backdrop-blur-xs flex justify-center items-center p-4 animate-fadeIn">
+            <div className="w-full max-w-md bg-white rounded-3xl p-6 shadow-2xl space-y-4 animate-scaleIn">
+              <div className="flex justify-between items-center border-b border-stone-100 pb-3">
+                <h4 className="font-bold text-stone-900 text-base">Nova Imagem do Slideshow</h4>
+                <button onClick={() => setShowAddSlideForm(false)} className="text-stone-400 hover:text-stone-600">
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+
+              <form onSubmit={handleAddSlideSubmit} className="space-y-4">
+                <div>
+                  <label className="block text-xs font-bold text-stone-500 uppercase mb-1">URL da Imagem</label>
+                  <input
+                    type="text"
+                    required
+                    value={slideUrl}
+                    onChange={(e) => setSlideUrl(e.target.value)}
+                    placeholder="https://exemplo.com/imagem.jpg ou /images/foto.jpg"
+                    className="w-full rounded-lg border border-stone-200 bg-stone-50 px-3 py-2 text-sm outline-none focus:border-emerald-500 focus:bg-white"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-stone-500 uppercase mb-1">Título</label>
+                  <input
+                    type="text"
+                    required
+                    value={slideTitle}
+                    onChange={(e) => setSlideTitle(e.target.value)}
+                    placeholder="Ex: Rio Claro de Cima"
+                    className="w-full rounded-lg border border-stone-200 bg-stone-50 px-3 py-2 text-sm outline-none focus:border-emerald-500 focus:bg-white"
+                  />
+                </div>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <div>
+                    <label className="block text-xs font-bold text-stone-500 uppercase mb-1">Categoria (Badge)</label>
+                    <input
+                      type="text"
+                      value={slideCategory}
+                      onChange={(e) => setSlideCategory(e.target.value)}
+                      placeholder="Ex: Ecoturismo"
+                      className="w-full rounded-lg border border-stone-200 bg-stone-50 px-3 py-2 text-sm outline-none focus:border-emerald-500 focus:bg-white"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-stone-500 uppercase mb-1">Localização (Coords)</label>
+                    <input
+                      type="text"
+                      value={slideCoords}
+                      onChange={(e) => setSlideCoords(e.target.value)}
+                      placeholder="Ex: Serra do Mar - RJ"
+                      className="w-full rounded-lg border border-stone-200 bg-stone-50 px-3 py-2 text-sm outline-none focus:border-emerald-500 focus:bg-white"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-stone-500 uppercase mb-1">Descrição Curta</label>
+                  <input
+                    type="text"
+                    value={slideShort}
+                    onChange={(e) => setSlideShort(e.target.value)}
+                    placeholder="Uma pequena descrição..."
+                    className="w-full rounded-lg border border-stone-200 bg-stone-50 px-3 py-2 text-sm outline-none focus:border-emerald-500 focus:bg-white"
+                  />
+                </div>
+
+                <div className="flex justify-end gap-2 pt-3 border-t border-stone-100">
+                  <button
+                    type="button"
+                    onClick={() => setShowAddSlideForm(false)}
+                    className="rounded-lg border border-stone-200 px-4 py-2 text-xs font-semibold text-stone-600 hover:bg-stone-50"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    type="submit"
+                    className="rounded-lg bg-emerald-600 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-700"
+                  >
+                    Adicionar ao Slideshow
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
 
         {/* Rodapé Interno */}
         <div className="pt-4 border-t border-stone-100 mt-4 text-center">
@@ -1333,6 +1545,324 @@ function ComercioLocal() {
   );
 }
 
+const videosList = [
+  {
+    id: "Cs5IOYzHuhI",
+    title: "Rio Claro",
+    desc: "Conheça as belezas naturais, a cultura local e a história fascinante do município de Rio Claro.",
+    district: "Rio Claro",
+  },
+  {
+    id: "kMMn5ArPgnM",
+    title: "Rio Claro Centro",
+    desc: "A vida urbana, o comércio e o cotidiano no centro histórico e administrativo de Rio Claro.",
+    district: "Centro",
+  },
+  {
+    id: "H3UqUwqEqwQ",
+    title: "Ruínas de São João Marcos",
+    desc: "Uma viagem no tempo pelas ruínas do Parque Arqueológico de uma das primeiras cidades planejadas do Brasil.",
+    district: "São João Marcos",
+  },
+  {
+    id: "vJxVhAJZY-Q",
+    title: "Fazenda São Joaquim da Grama",
+    desc: "O imponente patrimônio histórico do ciclo do café no distrito de Passa Três.",
+    district: "Passa Três",
+  },
+  {
+    id: "R6qHn0VmOHc",
+    title: "Lídice",
+    desc: "Descubra as cachoeiras exuberantes, clima de montanha e a charmosa vila de Lídice.",
+    district: "Lídice",
+  },
+];
+
+function VideoGallery() {
+  return (
+    <section id="videos" className="bg-stone-50 py-20 border-t border-stone-100">
+      <div className="mx-auto max-w-6xl px-5">
+        <div className="text-center mb-12">
+          <span className="text-sm font-bold uppercase tracking-wider text-emerald-600">
+            Galeria Audiovisual
+          </span>
+          <h2 className="mt-2 text-3xl font-extrabold text-emerald-950 sm:text-4xl">
+            Vídeos de Rio Claro e Região
+          </h2>
+          <p className="mx-auto mt-3 max-w-2xl text-stone-600 text-sm sm:text-base">
+            Explore a beleza, a história e os encantos de nossos distritos através de produções audiovisuais especiais.
+          </p>
+        </div>
+
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {videosList.map((video) => (
+            <div
+              key={video.id}
+              className="group overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-stone-100 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl flex flex-col justify-between"
+            >
+              <div className="relative aspect-video w-full bg-black">
+                <iframe
+                  className="w-full h-full border-0"
+                  src={`https://www.youtube.com/embed/${video.id}`}
+                  title={video.title}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+              <div className="p-5 flex-1 flex flex-col justify-between">
+                <div>
+                  <div className="flex gap-2 mb-2">
+                    <span className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-semibold text-emerald-800">
+                      Vídeo
+                    </span>
+                    <span className="rounded-full bg-stone-100 px-2.5 py-0.5 text-xs font-semibold text-stone-600">
+                      {video.district}
+                    </span>
+                  </div>
+                  <h3 className="text-lg font-bold text-emerald-950 group-hover:text-emerald-700 transition-colors">
+                    {video.title}
+                  </h3>
+                  <p className="mt-2 text-sm text-stone-600 leading-relaxed">
+                    {video.desc}
+                  </p>
+                </div>
+                <div className="mt-4 pt-4 border-t border-stone-50 flex items-center justify-between">
+                  <a
+                    href={`https://www.youtube.com/watch?v=${video.id}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-xs font-bold text-emerald-600 hover:text-emerald-700 transition-colors inline-flex items-center gap-1"
+                  >
+                    Assistir no YouTube <ExternalLink className="h-3 w-3" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export type SlideItem = {
+  id: string;
+  image: string;
+  title: string;
+  category: string;
+  coords: string;
+  short: string;
+};
+
+interface SlideshowProps {
+  isOpen: boolean;
+  onClose: () => void;
+  slides: SlideItem[];
+}
+
+function SlideshowModal({ isOpen, onClose, slides }: SlideshowProps) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(true);
+
+  useEffect(() => {
+    if (!isOpen || !isPlaying || slides.length === 0) return;
+
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % slides.length);
+    }, 4000); // changes every 4 seconds
+
+    return () => clearInterval(interval);
+  }, [isOpen, isPlaying, slides.length]);
+
+  if (!isOpen || slides.length === 0) return null;
+
+  const currentSlide = slides[currentIndex];
+
+  const handlePrev = () => {
+    setCurrentIndex((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
+  };
+
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % slides.length);
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-md animate-fadeIn">
+      {/* Botão de Fechar */}
+      <button
+        onClick={onClose}
+        className="absolute right-6 top-6 z-55 flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-all hover:scale-105 active:scale-95"
+        title="Fechar Apresentação"
+      >
+        <X className="h-6 w-6" />
+      </button>
+
+      {/* Controles de Slide e Imagem */}
+      <div className="relative w-full h-full flex flex-col justify-between p-6">
+        {/* Imagem com transição */}
+        <div className="absolute inset-0 flex items-center justify-center p-4 md:p-12">
+          <div className="relative max-h-[80vh] max-w-[90vw] aspect-[16/10] overflow-hidden rounded-3xl shadow-2xl border border-white/10 bg-black">
+            <img
+              src={currentSlide.image}
+              alt={currentSlide.title}
+              className="w-full h-full object-cover transition-opacity duration-1000 animate-fadeIn"
+              key={currentSlide.id}
+            />
+            {/* Gradiente de legenda */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent flex flex-col justify-end p-6 md:p-10 text-white">
+              <span className="inline-block self-start rounded-full bg-emerald-600 px-3 py-1 text-xs font-semibold uppercase tracking-wider mb-2">
+                {currentSlide.category}
+              </span>
+              <h2 className="text-xl md:text-3xl font-extrabold drop-shadow-md">{currentSlide.title}</h2>
+              <p className="text-xs md:text-sm text-stone-300 mt-1 flex items-center gap-1">📍 {currentSlide.coords}</p>
+              <p className="text-sm text-stone-250 mt-3 hidden md:line-clamp-2 max-w-2xl">{currentSlide.short}</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Botão Anterior */}
+        <button
+          onClick={handlePrev}
+          className="absolute left-6 top-1/2 -translate-y-1/2 z-55 flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/25 transition"
+        >
+          <ChevronLeft className="h-6 w-6" />
+        </button>
+
+        {/* Botão Próximo */}
+        <button
+          onClick={handleNext}
+          className="absolute right-6 top-1/2 -translate-y-1/2 z-55 flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/25 transition"
+        >
+          <ChevronRight className="h-6 w-6" />
+        </button>
+
+        {/* Barra de controle inferior */}
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-55 flex items-center gap-4 bg-emerald-950/80 px-6 py-3 rounded-full border border-white/25 backdrop-blur shadow-2xl">
+          <button
+            onClick={() => setIsPlaying(!isPlaying)}
+            className="text-white hover:text-emerald-400 transition"
+            title={isPlaying ? "Pausar Apresentação" : "Iniciar Apresentação"}
+          >
+            {isPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5 fill-white" />}
+          </button>
+
+          {/* Indicadores de bolinhas */}
+          <div className="flex gap-1.5 max-w-[40vw] overflow-x-auto py-1">
+            {slides.map((slide, idx) => (
+              <button
+                key={slide.id}
+                onClick={() => setCurrentIndex(idx)}
+                className={`h-2 w-2 rounded-full transition-all duration-300 ${idx === currentIndex ? "bg-emerald-400 w-4" : "bg-white/30 hover:bg-white/60"}`}
+              />
+            ))}
+          </div>
+
+          <span className="text-xs font-semibold text-emerald-300 whitespace-nowrap">
+            {currentIndex + 1} / {slides.length}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function AmbientPlayer({ onOpenSlideshow }: { onOpenSlideshow: () => void }) {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [soundType, setSoundType] = useState("forest"); // forest, river, rain
+  const [volume, setVolume] = useState(0.4);
+  const [audio] = useState(() => {
+    const a = new Audio("https://raw.githubusercontent.com/karthiknvd/noctune/master/sounds/forest.mp3");
+    a.loop = true;
+    return a;
+  });
+
+  useEffect(() => {
+    audio.volume = volume;
+  }, [volume, audio]);
+
+  useEffect(() => {
+    audio.src = `https://raw.githubusercontent.com/karthiknvd/noctune/master/sounds/${soundType}.mp3`;
+    if (isPlaying) {
+      audio.play().catch((err) => console.log("Erro ao reproduzir áudio:", err));
+    }
+  }, [soundType, audio, isPlaying]);
+
+  useEffect(() => {
+    if (isPlaying) {
+      audio.play().catch((err) => console.log("Erro ao reproduzir áudio:", err));
+    } else {
+      audio.pause();
+    }
+  }, [isPlaying, audio]);
+
+  // Clean up on unmount
+  useEffect(() => {
+    return () => {
+      audio.pause();
+    };
+  }, [audio]);
+
+  return (
+    <div className="fixed bottom-6 left-6 z-40 flex items-center gap-3 rounded-2xl border border-white/20 bg-emerald-950/90 p-3 text-white shadow-2xl backdrop-blur-md transition-all duration-300 hover:scale-102">
+      <button
+        onClick={() => setIsPlaying(!isPlaying)}
+        className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-500 hover:bg-emerald-400 text-emerald-950 transition hover:scale-105 active:scale-95 shadow-md"
+        title={isPlaying ? "Pausar som da natureza" : "Tocar som da natureza"}
+      >
+        {isPlaying ? (
+          <Pause className="h-5 w-5 fill-emerald-950" />
+        ) : (
+          <Play className="h-5 w-5 fill-emerald-950 translate-x-0.5" />
+        )}
+      </button>
+
+      <button
+        onClick={onOpenSlideshow}
+        className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-800 hover:bg-emerald-700 text-white transition hover:scale-105 active:scale-95 shadow-md border border-white/10"
+        title="Apresentação de Slides (Imagens)"
+      >
+        <Image className="h-4.5 w-4.5" />
+      </button>
+
+      <div className="flex flex-col gap-1">
+        <div className="flex items-center justify-between gap-4">
+          <span className="text-xs font-bold flex items-center gap-1">
+            <Music className={`h-3 w-3 ${isPlaying ? "animate-pulse" : ""}`} />
+            Sons da Natureza
+          </span>
+          <select
+            value={soundType}
+            onChange={(e) => setSoundType(e.target.value)}
+            className="bg-transparent border-0 text-[10px] font-semibold text-emerald-300 focus:ring-0 outline-none cursor-pointer"
+          >
+            <option value="forest" className="bg-emerald-950 text-white">🌳 Floresta</option>
+            <option value="river" className="bg-emerald-950 text-white">🌊 Rio</option>
+            <option value="rain" className="bg-emerald-950 text-white">🌧️ Chuva</option>
+          </select>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setVolume(volume === 0 ? 0.4 : 0)}
+            className="text-white/80 hover:text-white"
+          >
+            {volume === 0 ? <VolumeX className="h-3.5 w-3.5" /> : <Volume2 className="h-3.5 w-3.5" />}
+          </button>
+          <input
+            type="range"
+            min="0"
+            max="1"
+            step="0.05"
+            value={volume}
+            onChange={(e) => setVolume(Number(e.target.value))}
+            className="h-1 w-20 cursor-pointer rounded-lg bg-white/20 accent-emerald-400 appearance-none"
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function App() {
 
   const [activeId, setActiveId] = useState<string | null>(null);
@@ -1343,14 +1873,19 @@ export default function App() {
   // Custom states for interactivity
   const [favorites, setFavorites] = useState<string[]>([]);
   const [itinerary, setItinerary] = useState<string[]>([]);
+  const [itineraryNotes, setItineraryNotes] = useState<Record<string, string>>({});
+  const [itineraryDays, setItineraryDays] = useState<Record<string, number>>({});
   const [extraReviews, setExtraReviews] = useState<Record<string, Review[]>>({});
 
   // Admin & Spots dynamic list states
   const [allSpots, setAllSpots] = useState<Spot[]>([]);
+  const [slideshowList, setSlideshowList] = useState<SlideItem[]>([]);
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
   const [showAdminLogin, setShowAdminLogin] = useState(false);
   const [showAdminPanel, setShowAdminPanel] = useState(false);
+  const [showSlideshow, setShowSlideshow] = useState(false);
 
+  // Editing state
   const [editingSpot, setEditingSpot] = useState<Spot | null>(null);
   const [showFormModal, setShowFormModal] = useState(false);
 
@@ -1372,6 +1907,27 @@ export default function App() {
       setAllSpots(initialSpots);
     }
 
+    const savedSlides = localStorage.getItem("rc_slides");
+    if (savedSlides) {
+      try {
+        setSlideshowList(JSON.parse(savedSlides));
+      } catch (e) {
+        console.error("Failed to parse slides from localstorage", e);
+      }
+    } else {
+      // Create initial slides from spots
+      const defaultSlides = initialSpots.map((spot) => ({
+        id: `slide-${spot.id}`,
+        image: spot.image,
+        title: spot.name,
+        category: spot.category,
+        coords: spot.coords,
+        short: spot.short,
+      }));
+      setSlideshowList(defaultSlides);
+      localStorage.setItem("rc_slides", JSON.stringify(defaultSlides));
+    }
+
     const savedFavs = localStorage.getItem("rc_favs");
     if (savedFavs) {
       try { setFavorites(JSON.parse(savedFavs)); } catch (e) { console.error(e); }
@@ -1379,6 +1935,14 @@ export default function App() {
     const savedItin = localStorage.getItem("rc_itin");
     if (savedItin) {
       try { setItinerary(JSON.parse(savedItin)); } catch (e) { console.error(e); }
+    }
+    const savedItinNotes = localStorage.getItem("rc_itin_notes");
+    if (savedItinNotes) {
+      try { setItineraryNotes(JSON.parse(savedItinNotes)); } catch (e) { console.error(e); }
+    }
+    const savedItinDays = localStorage.getItem("rc_itin_days");
+    if (savedItinDays) {
+      try { setItineraryDays(JSON.parse(savedItinDays)); } catch (e) { console.error(e); }
     }
   }, []);
 
@@ -1397,6 +1961,16 @@ export default function App() {
   const saveItinerary = (newItin: string[]) => {
     setItinerary(newItin);
     localStorage.setItem("rc_itin", JSON.stringify(newItin));
+  };
+
+  const saveItineraryNotes = (newNotes: Record<string, string>) => {
+    setItineraryNotes(newNotes);
+    localStorage.setItem("rc_itin_notes", JSON.stringify(newNotes));
+  };
+
+  const saveItineraryDays = (newDays: Record<string, number>) => {
+    setItineraryDays(newDays);
+    localStorage.setItem("rc_itin_days", JSON.stringify(newDays));
   };
 
   const categories = useMemo(
@@ -1448,18 +2022,67 @@ export default function App() {
       e.stopPropagation();
       e.preventDefault();
     }
-    const updated = itinerary.includes(id)
+    const isIn = itinerary.includes(id);
+    const updated = isIn
       ? itinerary.filter((itinId) => itinId !== id)
       : [...itinerary, id];
     saveItinerary(updated);
+    if (isIn) {
+      const nextNotes = { ...itineraryNotes };
+      delete nextNotes[id];
+      saveItineraryNotes(nextNotes);
+      const nextDays = { ...itineraryDays };
+      delete nextDays[id];
+      saveItineraryDays(nextDays);
+    }
   };
 
   const clearItinerary = () => {
     saveItinerary([]);
+    saveItineraryNotes({});
+    saveItineraryDays({});
   };
 
   const printItinerary = () => {
     window.print();
+  };
+
+  const moveItineraryItem = (index: number, direction: "up" | "down") => {
+    const nextItin = [...itinerary];
+    const targetIndex = direction === "up" ? index - 1 : index + 1;
+    if (targetIndex < 0 || targetIndex >= nextItin.length) return;
+    const temp = nextItin[index];
+    nextItin[index] = nextItin[targetIndex];
+    nextItin[targetIndex] = temp;
+    saveItinerary(nextItin);
+  };
+
+  const updateItineraryNote = (id: string, note: string) => {
+    const nextNotes = { ...itineraryNotes, [id]: note };
+    saveItineraryNotes(nextNotes);
+  };
+
+  const updateItineraryDay = (id: string, day: number) => {
+    const nextDays = { ...itineraryDays, [id]: day };
+    saveItineraryDays(nextDays);
+  };
+
+  const getGoogleMapsRouteUrl = () => {
+    if (itinerary.length === 0) return "";
+    const spotNames = itinerary
+      .map(id => allSpots.find(s => s.id === id))
+      .filter((s): s is Spot => !!s)
+      .map(s => encodeURIComponent(s.mapQuery || `${s.name}, Rio Claro, RJ`));
+    
+    if (spotNames.length === 1) {
+      return `https://www.google.com/maps/search/?api=1&query=${spotNames[0]}`;
+    }
+    
+    const origin = spotNames[0];
+    const destination = spotNames[spotNames.length - 1];
+    const waypoints = spotNames.slice(1, -1).join("|");
+    
+    return `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}${waypoints ? `&waypoints=${waypoints}` : ""}`;
   };
 
   // CRUD ADMIN HANDLERS
@@ -1483,6 +2106,12 @@ export default function App() {
       // clean itinerary/favorites if removed
       saveFavorites(favorites.filter((favId) => favId !== id));
       saveItinerary(itinerary.filter((itinId) => itinId !== id));
+      const nextNotes = { ...itineraryNotes };
+      delete nextNotes[id];
+      saveItineraryNotes(nextNotes);
+      const nextDays = { ...itineraryDays };
+      delete nextDays[id];
+      saveItineraryDays(nextDays);
     }
   };
 
@@ -1660,7 +2289,15 @@ export default function App() {
                   </span>
                   <span className="font-bold text-stone-800 text-sm">Paradas no seu roteiro</span>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
+                  <a
+                    href={getGoogleMapsRouteUrl()}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1.5 rounded-lg border border-emerald-300 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700 hover:bg-emerald-100 transition"
+                  >
+                    <MapPin className="h-3.5 w-3.5 text-emerald-600" /> Rota no Google Maps
+                  </a>
                   <button
                     onClick={printItinerary}
                     className="flex items-center gap-1.5 rounded-lg border border-stone-300 bg-white px-3 py-2 text-xs font-semibold text-stone-700 hover:bg-stone-50"
@@ -1690,9 +2327,33 @@ export default function App() {
                   return (
                     <div
                       key={spot.id}
-                      className="flex items-start gap-4 p-4 rounded-2xl bg-white border border-stone-100 shadow-sm print:shadow-none"
+                      className="flex items-start gap-4 p-4 rounded-2xl bg-white border border-stone-100 shadow-sm print:shadow-none print:border print:border-stone-200"
                     >
-                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-600 text-sm font-bold text-white shadow-sm">
+                      {/* Controles de Ordenação (Ocultos na impressão) */}
+                      <div className="flex flex-col items-center gap-1 shrink-0 print:hidden">
+                        <button
+                          onClick={() => moveItineraryItem(idx, "up")}
+                          disabled={idx === 0}
+                          className={`text-stone-400 hover:text-emerald-600 transition p-0.5 rounded ${idx === 0 ? "opacity-20 cursor-not-allowed" : ""}`}
+                          title="Mover para cima"
+                        >
+                          <ChevronUp className="h-4 w-4" />
+                        </button>
+                        <div className="flex h-7 w-7 items-center justify-center rounded-full bg-emerald-600 text-xs font-bold text-white shadow-sm">
+                          {idx + 1}
+                        </div>
+                        <button
+                          onClick={() => moveItineraryItem(idx, "down")}
+                          disabled={idx === itinerary.length - 1}
+                          className={`text-stone-400 hover:text-emerald-600 transition p-0.5 rounded ${idx === itinerary.length - 1 ? "opacity-20 cursor-not-allowed" : ""}`}
+                          title="Mover para baixo"
+                        >
+                          <ChevronDown className="h-4 w-4" />
+                        </button>
+                      </div>
+
+                      {/* Badge de Ordem para Impressão */}
+                      <div className="hidden print:flex h-8 w-8 items-center justify-center rounded-full bg-emerald-600 text-sm font-bold text-white shadow-sm shrink-0 self-center">
                         {idx + 1}
                       </div>
 
@@ -1700,17 +2361,54 @@ export default function App() {
                         <div className="flex flex-wrap items-baseline gap-2">
                           <h4 className="font-bold text-stone-900 text-base">{spot.name}</h4>
                           <span className="text-xs text-stone-400">({spot.district})</span>
+                          <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 rounded px-2 py-0.5">
+                            Dia {itineraryDays[spot.id] || 1}
+                          </span>
                         </div>
                         <p className="text-xs text-emerald-600 mt-0.5 font-semibold">📍 {spot.coords}</p>
                         <p className="text-sm text-stone-600 mt-2">{spot.short}</p>
 
                         {spot.highlights && spot.highlights.length > 0 && (
-                          <div className="mt-3 flex flex-wrap gap-1.5">
+                          <div className="mt-3 flex flex-wrap gap-1.5 print:hidden">
                             {spot.highlights.map((h) => (
                               <span key={h} className="text-[10px] font-semibold text-stone-500 bg-stone-100 rounded-full px-2 py-0.5">
                                 {h}
                               </span>
                             ))}
+                          </div>
+                        )}
+
+                        {/* Notas e Seletor de Dia */}
+                        <div className="mt-3 pt-3 border-t border-stone-100 flex flex-col sm:flex-row sm:items-center gap-3 print:hidden">
+                          <div className="flex items-center gap-1.5 shrink-0">
+                            <span className="text-xs font-semibold text-stone-500">Programar para:</span>
+                            <select
+                              value={itineraryDays[spot.id] || 1}
+                              onChange={(e) => updateItineraryDay(spot.id, parseInt(e.target.value))}
+                              className="text-xs rounded-lg border border-stone-200 bg-white px-2.5 py-1 font-semibold text-stone-700 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                            >
+                              <option value={1}>Dia 1</option>
+                              <option value={2}>Dia 2</option>
+                              <option value={3}>Dia 3</option>
+                              <option value={4}>Dia 4</option>
+                              <option value={5}>Dia 5</option>
+                            </select>
+                          </div>
+                          <div className="flex-1">
+                            <input
+                              type="text"
+                              placeholder="Adicionar nota (ex: 'Almoço aqui', 'Levar repelente', '10:00h')"
+                              value={itineraryNotes[spot.id] || ""}
+                              onChange={(e) => updateItineraryNote(spot.id, e.target.value)}
+                              className="w-full text-xs rounded-lg border border-stone-200 bg-stone-50/50 px-2.5 py-1 text-stone-700 focus:bg-white focus:outline-none focus:ring-1 focus:ring-emerald-500 placeholder-stone-400 transition"
+                            />
+                          </div>
+                        </div>
+
+                        {/* Exibição da Nota na Impressão */}
+                        {itineraryNotes[spot.id] && (
+                          <div className="mt-2 hidden print:block text-xs italic text-stone-600 bg-stone-50 p-2 rounded-lg border-l-2 border-emerald-500">
+                            <b>Nota de viagem:</b> {itineraryNotes[spot.id]}
                           </div>
                         )}
                       </div>
@@ -1745,6 +2443,9 @@ export default function App() {
 
       {/* COMÉRCIO LOCAL */}
       <ComercioLocal />
+
+      {/* GALERIA DE VÍDEOS */}
+      <VideoGallery />
 
       {/* Mapa geral */}
       <section id="mapa" className="bg-emerald-950 py-20 text-white">
@@ -1805,6 +2506,7 @@ export default function App() {
                 <li><a href="#quiz" className="hover:text-white transition">Fazer Quiz</a></li>
                 <li><a href="#pontos" className="hover:text-white transition">Pontos turísticos</a></li>
                 <li><a href="#comercio" className="hover:text-white transition flex items-center gap-1">🛒 Comércio Local</a></li>
+                <li><a href="#videos" className="hover:text-white transition">Galeria de Vídeos</a></li>
                 <li><a href="#roteiro-sec" className="hover:text-white transition">Planejador de Roteiro</a></li>
               </ul>
             </div>
@@ -1887,11 +2589,11 @@ export default function App() {
                     return (
                       <div key={spot.id} className="flex gap-3 p-2.5 rounded-xl border border-stone-100 hover:bg-stone-50 transition cursor-pointer" onClick={() => { setActiveId(spot.id); setShowFavoritesPanel(false); }}>
                         <img
-                          src={spot.image || `${baseUrl}images/hero.jpg`}
+                          src={spot.image || "/images/hero.jpg"}
                           alt={spot.name}
                           className="h-16 w-16 rounded-lg object-cover shrink-0 bg-stone-100"
                           onError={(e) => {
-                            (e.target as HTMLImageElement).src = `${baseUrl}images/hero.jpg`;
+                            (e.target as HTMLImageElement).src = "/images/hero.jpg";
                           }}
                         />
                         <div className="min-w-0">
@@ -1957,16 +2659,19 @@ export default function App() {
                           {idx + 1}
                         </div>
                         <img
-                          src={spot.image || `${baseUrl}images/hero.jpg`}
+                          src={spot.image || "/images/hero.jpg"}
                           alt={spot.name}
                           className="h-16 w-16 rounded-lg object-cover shrink-0 bg-stone-100"
                           onError={(e) => {
-                            (e.target as HTMLImageElement).src = `${baseUrl}images/hero.jpg`;
+                            (e.target as HTMLImageElement).src = "/images/hero.jpg";
                           }}
                         />
                         <div className="min-w-0">
                           <h4 className="font-bold text-stone-800 text-sm truncate">{spot.name}</h4>
-                          <span className="text-[10px] font-semibold text-stone-700 bg-stone-50 rounded px-1.5 py-0.5">{spot.district}</span>
+                          <div className="flex flex-wrap items-center gap-1 mt-1">
+                            <span className="text-[9px] font-semibold text-stone-600 bg-stone-100 rounded px-1.5 py-0.5">{spot.district}</span>
+                            <span className="text-[9px] font-bold text-emerald-700 bg-emerald-50 rounded px-1.5 py-0.5">Dia {itineraryDays[spot.id] || 1}</span>
+                          </div>
                           <p className="text-xs text-stone-400 mt-1 truncate">📍 {spot.coords}</p>
                         </div>
                         <button
@@ -2026,6 +2731,7 @@ export default function App() {
       {showAdminPanel && (
         <AdminPanel
           spotsList={allSpots}
+          slidesList={slideshowList}
           onClose={() => setShowAdminPanel(false)}
           onLogout={() => {
             setIsAdminLoggedIn(false);
@@ -2040,6 +2746,18 @@ export default function App() {
             setShowFormModal(true);
           }}
           onDelete={handleDeleteSpot}
+          onAddSlide={(slide) => {
+            const updated = [slide, ...slideshowList];
+            setSlideshowList(updated);
+            localStorage.setItem("rc_slides", JSON.stringify(updated));
+          }}
+          onDeleteSlide={(id) => {
+            if (window.confirm("Deseja realmente remover esta imagem do slideshow?")) {
+              const updated = slideshowList.filter((s) => s.id !== id);
+              setSlideshowList(updated);
+              localStorage.setItem("rc_slides", JSON.stringify(updated));
+            }
+          }}
         />
       )}
 
@@ -2054,6 +2772,16 @@ export default function App() {
           onSave={handleSaveSpot}
         />
       )}
+
+      {/* PLAYER DE ÁUDIO AMBIENTE */}
+      <AmbientPlayer onOpenSlideshow={() => setShowSlideshow(true)} />
+
+      {/* APRESENTAÇÃO DE SLIDES EM TELA CHEIA */}
+      <SlideshowModal
+        isOpen={showSlideshow}
+        onClose={() => setShowSlideshow(false)}
+        slides={slideshowList}
+      />
     </div>
   );
 }
