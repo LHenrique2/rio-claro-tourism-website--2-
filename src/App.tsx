@@ -245,11 +245,11 @@ function SpotCard({ spot, onOpen, isFavorite, onToggleFavorite, isInItinerary, o
       <div>
         <div className="relative h-56 overflow-hidden bg-stone-100">
           <img
-            src={spot.image || "/images/hero.jpg"}
+            src={spot.image || "images/hero.jpg"}
             alt={spot.name}
             className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
             onError={(e) => {
-              (e.target as HTMLImageElement).src = "/images/hero.jpg";
+              (e.target as HTMLImageElement).src = "images/hero.jpg";
             }}
           />
 
