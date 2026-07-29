@@ -246,11 +246,11 @@ function SpotCard({ spot, onOpen, isFavorite, onToggleFavorite, isInItinerary, o
       <div>
         <div className="relative h-56 overflow-hidden bg-stone-100">
           <img
-            src={spot.image || "images/hero.jpg"}
+            src={spot.image || "/images/hero.jpg"}
             alt={spot.name}
             className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
             onError={(e) => {
-              (e.target as HTMLImageElement).src = "images/hero.jpg";
+              (e.target as HTMLImageElement).src = "/images/hero.jpg";
             }}
           />
 
@@ -362,11 +362,11 @@ function SpotModal({
       >
         <div className="relative h-64 sm:h-80 bg-stone-200">
           <img
-            src={spot.image || "images/hero.jpg"}
+            src={spot.image || "/images/hero.jpg"}
             alt={spot.name}
             className="h-full w-full object-cover"
             onError={(e) => {
-              (e.target as HTMLImageElement).src = "images/hero.jpg";
+              (e.target as HTMLImageElement).src = "/images/hero.jpg";
             }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-transparent" />
