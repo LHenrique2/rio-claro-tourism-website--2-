@@ -134,7 +134,7 @@ function Hero() {
     <section id="top" className="relative flex h-screen min-h-[600px] items-center justify-center text-center">
       <div
         className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: "url('./images/hero.jpg')" }}
+        style={{ backgroundImage: "url('/images/hero.jpg')" }}
       />
       <div className="absolute inset-0 bg-gradient-to-b from-emerald-950/60 via-emerald-950/40 to-emerald-950/90" />
       <div className="relative z-10 mx-auto max-w-3xl px-5">
