@@ -1,3 +1,4 @@
+// -*- coding: utf-8 -*-
 import { useState, useMemo, useEffect } from "react";
 import { spots as initialSpots, type Spot, type Review } from "./data";
 import {
